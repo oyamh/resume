@@ -1,0 +1,11 @@
+[book]
+authors = ["oyamh"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Resume"
+
+[output.html]
+additional-js = ["assets/fzf.umd.js", "assets/elasticlunr.js"]
+
+[preprocessor]
