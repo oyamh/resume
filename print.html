@@ -1,0 +1,913 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Resume</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Introduction</a></li><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> Chapter 1</a></li><li class="chapter-item expanded "><a href="about_application/index.html"><strong aria-hidden="true">2.</strong> アプリケーションについて</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="about_application/outline.html"><strong aria-hidden="true">2.1.</strong> 概要</a></li><li class="chapter-item expanded "><a href="about_application/screenshot.html"><strong aria-hidden="true">2.2.</strong> スクリーンショット</a></li><li class="chapter-item expanded "><a href="about_application/motivation.html"><strong aria-hidden="true">2.3.</strong> 開発モチベーション</a></li><li class="chapter-item expanded "><a href="about_application/feature.html"><strong aria-hidden="true">2.4.</strong> 機能</a></li><li class="chapter-item expanded "><a href="about_application/system_diagram.html"><strong aria-hidden="true">2.5.</strong> インフラ構成図</a></li><li class="chapter-item expanded "><a href="about_application/er_diagram.html"><strong aria-hidden="true">2.6.</strong> ER図</a></li><li class="chapter-item expanded "><a href="about_application/programming_language.html"><strong aria-hidden="true">2.7.</strong> 開発言語</a></li><li class="chapter-item expanded "><a href="about_application/spotlight/index.html"><strong aria-hidden="true">2.8.</strong> 注力した点</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="about_application/spotlight/backend-go.html"><strong aria-hidden="true">2.8.1.</strong> バックエンド開発(Go)</a></li><li class="chapter-item expanded "><a href="about_application/spotlight/frontend-typescript.html"><strong aria-hidden="true">2.8.2.</strong> フロントエンド開発(TypeScript)</a></li><li class="chapter-item expanded "><a href="about_application/spotlight/browser-extension-rust.html"><strong aria-hidden="true">2.8.3.</strong> 拡張機能開発(Rust)</a></li><li class="chapter-item expanded "><a href="about_application/spotlight/cloud.html"><strong aria-hidden="true">2.8.4.</strong> クラウド＆ネットワーク構築</a></li><li class="chapter-item expanded "><a href="about_application/spotlight/security.html"><strong aria-hidden="true">2.8.5.</strong> セキュリティ</a></li></ol></li><li class="chapter-item expanded "><a href="about_application/reflect.html"><strong aria-hidden="true">2.9.</strong> 反省点</a></li><li class="chapter-item expanded "><a href="about_application/improve.html"><strong aria-hidden="true">2.10.</strong> 改善点</a></li></ol></li><li class="chapter-item expanded "><a href="about_me/index.html"><strong aria-hidden="true">3.</strong> 自分について</a></li><li class="chapter-item expanded "><a href="about_work/index.html"><strong aria-hidden="true">4.</strong> 仕事について</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Resume</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapter-1"><a class="header" href="#chapter-1">Chapter 1</a></h1>
+<p>This is a test text.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="アプリケーションについて"><a class="header" href="#アプリケーションについて">アプリケーションについて</a></h1>
+<p>作成したアプリケーションについて説明します。</p>
+<ul>
+<li><a href="about_application/./outline.html">概要とURL</a> — アプリケーションの概要とURL</li>
+<li><a href="about_application/./screenshot.html">スクリーンショット</a> — 画面のスクリーンショット</li>
+<li><a href="about_application/./motivation.html">開発モチベーション</a> — 開発した動機と要件について</li>
+<li><a href="about_application/./feature.html">機能</a> — 主な機能やその他機能について</li>
+<li><a href="about_application/./system_diagram.html">インフラ構成図</a> — サービス全体のインフラ構成を表した図</li>
+<li><a href="about_application/./er_diagram.html">ER図</a> — データベースのテーブル同士の関係を表した図</li>
+<li><a href="about_application/./programming_language.html">開発言語</a> — 開発に使用した言語について</li>
+<li><a href="about_application/./spotlight/README.html">注力した点</a> — 開発で力を入れた点について</li>
+<li><a href="about_application/./reflect.html">反省点</a> — 開発中や開発した後に気付いた反省について</li>
+<li><a href="about_application/./improve.html">改善点</a> — 今後の改良や機能追加の計画について</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="概要"><a class="header" href="#概要">概要</a></h1>
+<ul>
+<li>ブックマークをインポートして管理するWebサービスです。</li>
+<li>多くを外部ライブラリに依存せずに自力で実装しました。
+<ul>
+<li>React,Yew,gRPCフレームワークなどの基幹部分を除いて。</li>
+</ul>
+</li>
+<li>検索クエリの組み合わせによって柔軟な検索ができます。</li>
+<li>補完入力で簡単に検索できます。</li>
+<li>マークダウンでメモを追加して表示＆検索ができます。</li>
+</ul>
+<h1 id="url"><a class="header" href="#url">URL</a></h1>
+<h2 id="ブックマーク管理"><a class="header" href="#ブックマーク管理">ブックマーク管理</a></h2>
+<p>Webサイト: <a href="https://ganbeach.com">https://ganbeach.com</a></p>
+<h2 id="ブックマーク追加用拡張機能"><a class="header" href="#ブックマーク追加用拡張機能">ブックマーク追加用拡張機能</a></h2>
+<p>ソースコード: <a href="https://github.com/oyamh/ganbeach-bookmarker">https://github.com/oyamh/ganbeach-bookmarker</a>
+Chrome Web Store: <a href="https://chromewebstore.google.com/detail/ganbeach-bookmarker/jddhooblgpikkhhdhoebgjohoglmincf">https://chromewebstore.google.com/detail/ganbeach-bookmarker/jddhooblgpikkhhdhoebgjohoglmincf</a>
+Firefox Add-ons : <a href="https://addons.mozilla.org/firefox/addon/ganbeach-bookmarker/">https://addons.mozilla.org/firefox/addon/ganbeach-bookmarker/</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="スクリーンショット"><a class="header" href="#スクリーンショット">スクリーンショット</a></h1>
+<h2 id="top画面"><a class="header" href="#top画面">Top画面</a></h2>
+<h3 id="ダークテーマ"><a class="header" href="#ダークテーマ">ダークテーマ</a></h3>
+<p><img src="about_application/images/top-dark.png" alt="Top Dark" /></p>
+<h3 id="ライトテーマ"><a class="header" href="#ライトテーマ">ライトテーマ</a></h3>
+<p><img src="about_application/images/top-light.png" alt="Top Light" /></p>
+<h2 id="検索"><a class="header" href="#検索">検索</a></h2>
+<h3 id="検索クエリの例"><a class="header" href="#検索クエリの例">検索クエリの例</a></h3>
+<p><img src="about_application/images/search-bar-trimmed.png" alt="Search Query Example" /></p>
+<h3 id="検索フラグ一覧"><a class="header" href="#検索フラグ一覧">検索フラグ一覧</a></h3>
+<p><img src="about_application/images/completion-flags-trimmed.png" alt="Search Options" /></p>
+<h3 id="検索クエリの補完入力"><a class="header" href="#検索クエリの補完入力">検索クエリの補完入力</a></h3>
+<p><img src="about_application/images/completion-tags-trimmed.png" alt="Search Completion" /></p>
+<h2 id="追加"><a class="header" href="#追加">追加</a></h2>
+<h3 id="ブックマーク追加パネル"><a class="header" href="#ブックマーク追加パネル">ブックマーク追加パネル</a></h3>
+<p><img src="about_application/images/add-modal-trimmed.png" alt="Add Modal" /></p>
+<h2 id="編集"><a class="header" href="#編集">編集</a></h2>
+<h3 id="編集モード"><a class="header" href="#編集モード">編集モード</a></h3>
+<p><img src="about_application/images/edit-mode-with-annotation-focus.png" alt="Edit Mode" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="開発モチベーション"><a class="header" href="#開発モチベーション">開発モチベーション</a></h1>
+<p>機械学習を学ぼうと考えたのですが、学んでどうしたいかの目標がありませんでした。
+そこで、まずは自身の情報資産を機械学習に活用できる基盤アプリケーションを作りたいと考えました。
+日々蓄積していたブックマークデータを利用したアプリケーションを作ることにしました。
+ブックマークをより使いやすくするためのアプローチを考え、実装していきました。</p>
+<h1 id="要件"><a class="header" href="#要件">要件</a></h1>
+<h2 id="ブックマーク管理機能"><a class="header" href="#ブックマーク管理機能">ブックマーク管理機能</a></h2>
+<ul>
+<li>基本的なブックマーク管理機能</li>
+<li>ブラウザのブックマークファイルやブックマークバックアップのインポート機能</li>
+</ul>
+<h2 id="高度な検索機能"><a class="header" href="#高度な検索機能">高度な検索機能</a></h2>
+<ul>
+<li>キーワード、複数タグ、時間範囲指定などで<strong>同時に</strong>絞り込み検索できる機能</li>
+</ul>
+<h2 id="補足情報の追加機能"><a class="header" href="#補足情報の追加機能">補足情報の追加機能</a></h2>
+<ul>
+<li>アノテーションとして自由なテキストを追加できる機能
+<ul>
+<li>ブックマークした理由などのメモや、内容の要約などの追加機能</li>
+<li>アノテーションの検索機能</li>
+</ul>
+</li>
+<li>マークダウン形式</li>
+</ul>
+<h2 id="手軽に扱えるui"><a class="header" href="#手軽に扱えるui">手軽に扱えるUI</a></h2>
+<ul>
+<li>タグやフォルダの補完入力機能</li>
+<li>キーボードでの操作
+<ul>
+<li>ブラウザ拡張機能のVimiumやTridactylでの操作</li>
+</ul>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="機能"><a class="header" href="#機能">機能</a></h1>
+<h2 id="主な機能"><a class="header" href="#主な機能">主な機能</a></h2>
+<ul>
+<li>ログイン
+<ul>
+<li>SNS認証
+<ul>
+<li>GitHubアカウント</li>
+<li>Googleアカウント</li>
+</ul>
+</li>
+<li>メールアドレス認証
+<ul>
+<li>メールアドレスへ認証コード送信</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ログアウト</li>
+<li>ブックマーク
+<ul>
+<li>インポート</li>
+<li>登録
+<ul>
+<li>ブックマーク</li>
+<li>フォルダ</li>
+<li>タグ</li>
+</ul>
+</li>
+<li>検索</li>
+<li>編集
+<ul>
+<li>ブックマークデータ</li>
+<li>アノテーション</li>
+</ul>
+</li>
+<li>削除
+<ul>
+<li>一括削除</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="その他機能"><a class="header" href="#その他機能">その他機能</a></h2>
+<ul>
+<li>キー入力による行選択</li>
+<li>編集モード</li>
+<li>アノテーション閲覧モード</li>
+<li>行選択
+<ul>
+<li>複数の行を選択して編集</li>
+<li>複数の行を選択して削除</li>
+</ul>
+</li>
+<li>検索バー
+<ul>
+<li>補完入力
+<ul>
+<li>タグ</li>
+<li>フォルダ</li>
+<li>時刻</li>
+<li>キーボードでもマウスでも選択可能</li>
+<li>検索フラグ自体も補完入力可能</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>テーマ変更</li>
+<li>フォルダツリー</li>
+<li>タグ一覧</li>
+<li>ブックマークインポート
+<ul>
+<li>リンクのFaviconをダウンロードしてサイズ変更したのち保存</li>
+</ul>
+</li>
+<li>ブックマーク追加
+<ul>
+<li>リンク、フォルダ、タグの三種類を追加可能</li>
+<li>フォルダやタグにもタグを付与可能</li>
+<li>補完入力</li>
+</ul>
+</li>
+<li>アカウント
+<ul>
+<li>消去
+<ul>
+<li>認証コードによる消去</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>テーマ変更
+<ul>
+<li>Light</li>
+<li>Dark</li>
+</ul>
+</li>
+<li>行ソート
+<ul>
+<li>名前</li>
+<li>タグ</li>
+<li>URL</li>
+<li>更新日時</li>
+<li>作成日時</li>
+</ul>
+</li>
+<li>カラム整理
+<ul>
+<li>順番入れ替え</li>
+<li>消去</li>
+</ul>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="インフラ構成図"><a class="header" href="#インフラ構成図">インフラ構成図</a></h1>
+<p><img src="about_application/images/ganbeach-system-dialog.svg" alt="System Diagram" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="er図"><a class="header" href="#er図">ER図</a></h1>
+<h2 id="mermaid-live-editor"><a class="header" href="#mermaid-live-editor">Mermaid Live Editor</a></h2>
+<p>クリックでMermaid Live Editorを開きます。
+<a href="https://mermaid.live/edit#pako:eNq1V9ty2jAQ_RWNnsoMZLiEQPyWTppO2iTN5PLS0vGsbQEqtsRIMglN-PeubGwMCNKkqZ9knd3V2Yt35ScayohRjzYajYEw3MTMI59BBAzCMflkd-bkhsVguBR6zKfklMNIQTIQmQZT5TvB514zpclT_mKfgI-4MCTFfZ9H5PrrFqSkNBYa0BNyfkrkkJgxy3bJUMYRUwO60rEK2oBh61tTJWccRdGIZUAiMEC0TFXIqtq4zQxPGAkVw2Xkg3GAMWjjxxLJOcB0Gm1pzkCFY1Afjjo1IiBh20i7260RlgCPV5g2iosRgRlyVX6qKtAvLQWRUxvyfHMxWC6CHx-lnCSgJvqnI8zBEtwR6iILZ9vQFBQTNg8rxHAxt5CZT5lvqwSje8HFhEhFzrLM2NUdjDYTNJWaW-4of4eplMqKcpHlNT_Hkdm_y82-8Hdb7RrJKngjaPcqdtakil8fp2qEq3DGoF8jPJTCJtMfgx5XYskeswM3mF0yA1mtbrNLltD7UcyqysAI9zWm5svtt6tCBZSCOZEinhcpKSlecG3OxVA6KMYI-Ryx9-OoE4hjKxCOeRxh1aW4HtCrNAlsuQ1LRU0w0Aa4YFFRWsOyJs2qJks_ToSQJu9iDlegRN_Pl7dXdFYtK0obnpTd2OGHWmKv9wKEYSGL8ibgEoiYDpmIYF2gZHWLHwD2MxcpnUM7OMkHUZDCTN-wIcMOETJiZEG32iaWSqOUafNapV2JKlogUwnXOm9clyBghLUVzBHGrxH05N-7VRms6_IoV7zsgdVA7Z4vWaHYxCjumhZnMLP9yHXGMIc2c_L2mn2hAa4mIToRSRyFYsONQnGzruy0X_PA0t-g7bgW7PXkzRG9Xl40XiJUzM7iYvK_eeX3rufnRkM-kYB4BKPvQLJJWAGDHHgugGVPXVeVmWo5qlzqFdBpIj-9HCUuExVwj4lqF3dZWcf3GFo1UQ8_bvutr5talwCtZchtIfoP3Iyr9hZ5eMr25zb3XBUIWCxx5Rs5ELROE2wGwCO8g2c1NaA4zDD11MNlhO3K9p0FykFq5O1chNQzKmV1mn-Fy-t3sTkF8V3K6iv1nugj9ZoHTXxazd5hp9fptdvN3tFh66hO59RrNZsH3X6ne9xt97r9Xv94Uae_MyOtOmURN1Jd5j8J2b_C4g_EjtK-"><img src="https://mermaid.ink/img/pako:eNq1V9ty2jAQ_RWNnsoMZLiEQPyWTppO2iTN5PLS0vGsbQEqtsRIMglN-PeubGwMCNKkqZ9knd3V2Yt35ScayohRjzYajYEw3MTMI59BBAzCMflkd-bkhsVguBR6zKfklMNIQTIQmQZT5TvB514zpclT_mKfgI-4MCTFfZ9H5PrrFqSkNBYa0BNyfkrkkJgxy3bJUMYRUwO60rEK2oBh61tTJWccRdGIZUAiMEC0TFXIqtq4zQxPGAkVw2Xkg3GAMWjjxxLJOcB0Gm1pzkCFY1Afjjo1IiBh20i7260RlgCPV5g2iosRgRlyVX6qKtAvLQWRUxvyfHMxWC6CHx-lnCSgJvqnI8zBEtwR6iILZ9vQFBQTNg8rxHAxt5CZT5lvqwSje8HFhEhFzrLM2NUdjDYTNJWaW-4of4eplMqKcpHlNT_Hkdm_y82-8Hdb7RrJKngjaPcqdtakil8fp2qEq3DGoF8jPJTCJtMfgx5XYskeswM3mF0yA1mtbrNLltD7UcyqysAI9zWm5svtt6tCBZSCOZEinhcpKSlecG3OxVA6KMYI-Ryx9-OoE4hjKxCOeRxh1aW4HtCrNAlsuQ1LRU0w0Aa4YFFRWsOyJs2qJks_ToSQJu9iDlegRN_Pl7dXdFYtK0obnpTd2OGHWmKv9wKEYSGL8ibgEoiYDpmIYF2gZHWLHwD2MxcpnUM7OMkHUZDCTN-wIcMOETJiZEG32iaWSqOUafNapV2JKlogUwnXOm9clyBghLUVzBHGrxH05N-7VRms6_IoV7zsgdVA7Z4vWaHYxCjumhZnMLP9yHXGMIc2c_L2mn2hAa4mIToRSRyFYsONQnGzruy0X_PA0t-g7bgW7PXkzRG9Xl40XiJUzM7iYvK_eeX3rufnRkM-kYB4BKPvQLJJWAGDHHgugGVPXVeVmWo5qlzqFdBpIj-9HCUuExVwj4lqF3dZWcf3GFo1UQ8_bvutr5talwCtZchtIfoP3Iyr9hZ5eMr25zb3XBUIWCxx5Rs5ELROE2wGwCO8g2c1NaA4zDD11MNlhO3K9p0FykFq5O1chNQzKmV1mn-Fy-t3sTkF8V3K6iv1nugj9ZoHTXxazd5hp9fptdvN3tFh66hO59RrNZsH3X6ne9xt97r9Xv94Uae_MyOtOmURN1Jd5j8J2b_C4g_EjtK-?type=png" alt="Ganbeach ER Diagram Live Editor" /></a></p>
+<h2 id="svg"><a class="header" href="#svg">SVG</a></h2>
+<p><img src="about_application/images/ganbeach-er-diagram-2024-02-03-111623.svg" alt="Ganbeach ER Diagram SVG" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="開発言語"><a class="header" href="#開発言語">開発言語</a></h1>
+<h2 id="go"><a class="header" href="#go">Go</a></h2>
+<p>APIサーバーの構築に使用しました。</p>
+<ul>
+<li>Userデータを処理するAPIサーバー</li>
+<li>Bookmarkデータを処理するAPIサーバー</li>
+<li>Import Fileを処理するAPIサーバー</li>
+</ul>
+<h3 id="選定した理由"><a class="header" href="#選定した理由">選定した理由</a></h3>
+<ul>
+<li>静的型付け言語での経験</li>
+<li>シンプルな言語仕様</li>
+</ul>
+<h2 id="typescript"><a class="header" href="#typescript">Typescript</a></h2>
+<p>クライアントサイドのUI構築に使用しました。</p>
+<h3 id="選定した理由-1"><a class="header" href="#選定した理由-1">選定した理由</a></h3>
+<ul>
+<li>Reactでの開発経験</li>
+<li>型システムによるJavaScriptの開発効率化</li>
+</ul>
+<h2 id="rust"><a class="header" href="#rust">Rust</a></h2>
+<p>ブラウザ拡張機能の制作に使用しました。</p>
+<h3 id="選定した理由-2"><a class="header" href="#選定した理由-2">選定した理由</a></h3>
+<ul>
+<li>メモリ効率</li>
+<li>実行速度</li>
+<li>軽量なバイナリファイル
+<ul>
+<li>上記三つは将来的なサーバーレス環境に最適</li>
+</ul>
+</li>
+<li>強い型束縛
+<ul>
+<li>効率的な開発に必要不可欠</li>
+</ul>
+</li>
+<li>ゼロコスト抽象化
+<ul>
+<li>Goではパフォーマンスの問題で躊躇していた抽象化が問題なく可能</li>
+</ul>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="注力した点"><a class="header" href="#注力した点">注力した点</a></h1>
+<p>制作の中でも特に力を入れた点や苦労した点について説明します。</p>
+<ul>
+<li><a href="about_application/spotlight/./backend-go.html">バックエンド開発(Go)</a></li>
+<li><a href="about_application/spotlight/./frontend-typescript.html">フロントエンド開発(TypeScript)</a></li>
+<li><a href="about_application/spotlight/./browser-extension-rust.html">拡張機能開発(Rust)</a></li>
+<li><a href="about_application/spotlight/./cloud.html">クラウド＆ネットワーク構築</a></li>
+<li><a href="about_application/spotlight/./security.html">セキュリティ</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="バックエンド開発go"><a class="header" href="#バックエンド開発go">バックエンド開発(Go)</a></h1>
+<h2 id="マイクロサービス"><a class="header" href="#マイクロサービス">マイクロサービス</a></h2>
+<ul>
+<li>ブラウザ上のフロントエンドと複数のAPIサーバーが、それぞれ必要に応じてデータ通信を行います。</li>
+<li>認証情報はトークンとしてブラウザが保有し、HTTPヘッダーに付与して通信を行います。</li>
+</ul>
+<h2 id="クリーンアーキテクチャ"><a class="header" href="#クリーンアーキテクチャ">クリーンアーキテクチャ</a></h2>
+<ul>
+<li>各レイヤーで依存を分離しつつ、依存関係を単一方向にしています。</li>
+</ul>
+<h2 id="データベース関連"><a class="header" href="#データベース関連">データベース関連</a></h2>
+<ul>
+<li>テーブル設計
+<ul>
+<li>外部キーを最大限に活用しています。
+<ul>
+<li>テーブル結合によって効率的な検索を実現しました。</li>
+</ul>
+</li>
+<li>複合的な操作を実現するために、正規化の余地を残しています。
+<ul>
+<li>フォルダもタグもブックマークとして同じテーブルに入れています。
+<ul>
+<li>フォルダにタグを付けたり、タグ自体にもタグを付けることができます。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ORM(Object Relational Mapping)を使わずに実装
+<ul>
+<li>事前にSQLを定義し、Stored Procedureとして使用しています。
+<ul>
+<li>Placeholder機能を使うことで、セキュアなSQLを構築できます。</li>
+</ul>
+</li>
+<li>検索では、サーバー内でSQLを動的に構築して高度な検索を実現しています。
+<ul>
+<li>検索クエリに応じて、WHERE句とINNER JOIN句を動的に構築しています。</li>
+<li>Stored ProcedureとPlaceholderを使うことで、SQLをセキュアに保っています。</li>
+<li>フォルダ検索の場合には、WITH RECURSIVE句を使ってフォルダの再帰的な検索ができます。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="キャッシュ"><a class="header" href="#キャッシュ">キャッシュ</a></h2>
+<ul>
+<li>依存の分離
+<ul>
+<li>開発中はRedisのホスティングを想定していました。</li>
+<li>本番環境では費用を抑えるため、Redisのホスティングを諦めてGoogle Cloud Firestoreに変えました。
+<ul>
+<li>依存を適切に分離していたので、変更に対して楽に対応できました。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="メールアドレスのみによる認証"><a class="header" href="#メールアドレスのみによる認証">メールアドレスのみによる認証</a></h2>
+<ul>
+<li>メールアドレスによる認証では、独自に認証コードを発行してEメールで送信しています。</li>
+</ul>
+<h2 id="grpc通信"><a class="header" href="#grpc通信">gRPC通信</a></h2>
+<ul>
+<li>gRPCを使って通信を行います。
+<ul>
+<li>通信データには、Protocol Bufferスキーマで定義されたデータ型を使っています。</li>
+<li>Connectで出力した型安全なコードを使ってクライアントと通信を行います。</li>
+</ul>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="フロントエンド開発typescript"><a class="header" href="#フロントエンド開発typescript">フロントエンド開発(TypeScript)</a></h1>
+<h2 id="外部依存の回避"><a class="header" href="#外部依存の回避">外部依存の回避</a></h2>
+<ul>
+<li>ReactとCodeMirror(マークダウン対応のテキストエリア)のみを使って作成しました。</li>
+<li>URLルーティング機構を自作しました。
+<ul>
+<li>シンプルなSPA(シングルページアプリケーション)を実現できました。</li>
+<li>複雑なクエリによる検索を、URLによるアクセスに落とし込みました。
+<ul>
+<li>検索クエリ自体を、リンクとしてブックマークして再利用できます。</li>
+<li>ブラウザのHistory APIのBack &amp; Forwardが使えます。</li>
+<li>外部から隠蔽された状態を減らしてシンプルな仕様になったので、機能拡張がしやすくなりました。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>コンポーネントを自作しました。
+<ul>
+<li>設計を学ぶため、余計なライブラリを使わずに実装しました。
+<ul>
+<li>後のYew(Rust版React)による開発に経験を活かすことができました。</li>
+</ul>
+</li>
+<li>自由度の高いコンポーネントを作って、複数箇所で流用できました。
+<ul>
+<li>補完入力ポップアップを表示するコンポーネント</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>可変レイアウトを自作しました。
+<ul>
+<li>各カラム、サイドバー、編集パネルのDrag ResizeをCSS Gridで実現しました。
+<ul>
+<li>軽快なエリアのリサイズができます。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="grpc通信-1"><a class="header" href="#grpc通信-1">gRPC通信</a></h2>
+<ul>
+<li>gRPCを使って通信を行います。</li>
+<li>通信データには、Protocol Bufferスキーマで定義されたデータ型を使っています。</li>
+<li>Connectで出力した型安全なコードを使ってサーバーと通信を行います。</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="拡張機能開発rust"><a class="header" href="#拡張機能開発rust">拡張機能開発(Rust)</a></h1>
+<h2 id="rustによるwebassembly"><a class="header" href="#rustによるwebassembly">RustによるWebAssembly</a></h2>
+<ul>
+<li>Rustで本格的なブラウザ拡張機能を作った例は、調べた中でほとんどありませんでした。</li>
+<li>問題が起きたときは、RustやWebAssemblyやブラウザ自体のIssueなどを調べて、解決できそうなこと、今は解決できないことを取捨選択しながら制作しました。</li>
+</ul>
+<h2 id="react経験の応用"><a class="header" href="#react経験の応用">React経験の応用</a></h2>
+<ul>
+<li>Yew(Rust版React)を使って制作しました。</li>
+<li>Reactによるコンポーネント開発の経験を活かすことができました。</li>
+</ul>
+<h2 id="依存関係の扱い"><a class="header" href="#依存関係の扱い">依存関係の扱い</a></h2>
+<ul>
+<li>DI(依存注入)の役割を担うContextによって各モジュールを疎結合に保っています。</li>
+</ul>
+<h2 id="grpc通信-2"><a class="header" href="#grpc通信-2">gRPC通信</a></h2>
+<ul>
+<li>gRPCを使って通信を行います。</li>
+<li>通信データには、Protocol Bufferスキーマで定義されたデータ型を使っています。</li>
+<li>Connectで出力した型安全なコードを使ってサーバーと通信を行います。</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="クラウドネットワーク構築"><a class="header" href="#クラウドネットワーク構築">クラウド＆ネットワーク構築</a></h1>
+<h2 id="google-cloud-engine"><a class="header" href="#google-cloud-engine">Google Cloud Engine</a></h2>
+<ul>
+<li>内部ではMySQLのDockerイメージを入れたコンテナを運用しています。</li>
+<li>Cloud SQLは使いませんでした。
+<ul>
+<li>目につきやすく、情報も多かったのですが、費用が掛かるため却下しました。</li>
+</ul>
+</li>
+<li>Cloud Engineを無料で運用しています。</li>
+</ul>
+<h2 id="google-cloud-run"><a class="header" href="#google-cloud-run">Google Cloud Run</a></h2>
+<ul>
+<li>APIサーバーのDockerイメージを入れたDockerコンテナを運用しています。
+<ul>
+<li>scratchイメージにバイナリファイルのみを組み込んで、軽量かつセキュアなコンテナを運用しています。</li>
+</ul>
+</li>
+</ul>
+<h2 id="google-cloud-storage"><a class="header" href="#google-cloud-storage">Google Cloud Storage</a></h2>
+<ul>
+<li>リンク先のサイズ変更済みFaviconを保存しています。</li>
+</ul>
+<h2 id="cloudflare"><a class="header" href="#cloudflare">CloudFlare</a></h2>
+<ul>
+<li>Pages
+<ul>
+<li>Viteを使って軽量化したコードを展開しています。</li>
+</ul>
+</li>
+<li>Worker
+<ul>
+<li>メンテナンスページの表示に使用しています。
+<ul>
+<li>IPアドレスを変数に登録することで、特定のアクセスのみを許可できます。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="ネットワーク構築"><a class="header" href="#ネットワーク構築">ネットワーク構築</a></h2>
+<ul>
+<li>複数のAPIサーバー、DBサーバー、キャッシュサービスのネットワークを構築しました。</li>
+<li>クライアント/サーバー間はgRPCで通信を行っています。</li>
+<li>APIサーバーはそれぞれ個別のドメインで管理しています。</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="セキュリティ"><a class="header" href="#セキュリティ">セキュリティ</a></h1>
+<h2 id="ログイン"><a class="header" href="#ログイン">ログイン</a></h2>
+<ul>
+<li>ログインにはSNS(GitHub, Google)のOAuth認証APIを使っています。</li>
+<li>ログインに使われるCookieはHttpOnly属性やSecure属性を使ってセキュアにしています。</li>
+<li>ログインにはJWT形式のStateトークンを使って、よりセキュアなログインを実現しています。
+<ul>
+<li>署名されたStateトークンに埋め込んだNonce値と、HttpOnlyなCookieのNonce値とを組み合わせたHash値を、キャッシュに保存してあるHash値と一致検証して、ログインの正当性を判定しています。</li>
+</ul>
+</li>
+<li>メールアドレスによる認証では、独自に認証コードを発行して外部サービス経由のメールで送信しています。</li>
+</ul>
+<h2 id="jwt"><a class="header" href="#jwt">JWT</a></h2>
+<ul>
+<li>各サーバーとの通信にはJWT形式のアクセストークンを使用しています。</li>
+<li>アクセストークンの期限は短く設定し、より安全に保管しているリフレッシュトークンを使って再取得させています。</li>
+</ul>
+<h2 id="dockerコンテナ"><a class="header" href="#dockerコンテナ">Dockerコンテナ</a></h2>
+<ul>
+<li>Docker Secretを使ってセキュアなImageを構築しています。
+<ul>
+<li>Docker SecretはImageの構築コマンド履歴に環境変数やSecretが残ってしまうのを防ぐために使われます。
+<ul>
+<li>履歴を見られること（docker historyコマンド）によって、Imageに使われた環境変数やSecretが漏洩するのを防ぎます。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="反省"><a class="header" href="#反省">反省</a></h1>
+<p>制作には数え切れないほどの失敗がありました。</p>
+<h2 id="バックエンド"><a class="header" href="#バックエンド">バックエンド</a></h2>
+<h3 id="早すぎたデータベース冗長化"><a class="header" href="#早すぎたデータベース冗長化">早すぎたデータベース冗長化</a></h3>
+<p>設定を調べて試行錯誤を繰り返し、ようやく実現したものの、使いませんでした。</p>
+<ul>
+<li>費用の問題で、DBサーバーを一つしか用意できませんでした。</li>
+<li>費用の問題で、キャッシュサーバー(Redis)を使わずに代替サービス(Firestore)を使うことになってしまいました。</li>
+<li>知識を得ることで技術的不安を取り除けたものの、必要になってからでも良かったかもと感じています。</li>
+</ul>
+<h2 id="フロントエンド"><a class="header" href="#フロントエンド">フロントエンド</a></h2>
+<h3 id="検索フラグ解析"><a class="header" href="#検索フラグ解析">検索フラグ解析</a></h3>
+<p>複数のフラグを入力中に、全ての位置の入力で補完入力パネルを表示させるという、本来不要な機能に注力していました。</p>
+<ul>
+<li>ユースケースを正しく想定できていませんでした。</li>
+<li>失敗を活かして、拡張機能の開発では改良した解析処理を実装しました。</li>
+</ul>
+<h2 id="拡張機能"><a class="header" href="#拡張機能">拡張機能</a></h2>
+<h3 id="ui設計"><a class="header" href="#ui設計">UI設計</a></h3>
+<p>ブックマーク追加ポップアップを対象のWebページのDOMに埋め込む形式で作っていましたが、ポップアップウィンドウ形式に変更しました。</p>
+<ul>
+<li>馴染みのあった有名企業の拡張機能のUIに影響されすぎて、判断が盲目になってしまいました。
+<ul>
+<li>他の手段がないかを調査して、検討するべきだったと考えています。
+<ul>
+<li>今後は最低でも2パターンは検討してから、冷静に比較して判断したいと思っています。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Webページ内の情報を使うためには、同じDOM内に埋め込んだ方が都合がいいのだろうと思い込んでしまいました。
+<ul>
+<li>思い込みや経験則を優先させずに、情報を集めてから意思決定をすべきだったと考えています。</li>
+</ul>
+</li>
+<li>結果、実装するに苦労した処理が、まったく要らなくなってしまいました。
+<ul>
+<li>次の障害を乗り越えるための地力を鍛えられたと、ポジティブに捉えています。
+<ul>
+<li>Webページ内のDOMやJSと隔離できる、ClosedなShadow DOM。</li>
+<li>Shadow DOM内に設置したIframeと、拡張機能バックグラウンドとのメッセージング機構。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="学習プロセス"><a class="header" href="#学習プロセス">学習プロセス</a></h3>
+<p>RustをWebAssemblyとしてJavaScript上で動作させながら学んだため、学習がより困難になったと感じています。</p>
+<ul>
+<li>開発環境構築</li>
+<li>RustとJSのギャップ
+<ul>
+<li>メモリ管理方式</li>
+<li>型の違い（u64型とBigInt型）</li>
+</ul>
+</li>
+<li>エラー原因の特定
+<ul>
+<li>Rust由来なのか</li>
+<li>WebAssembly由来なのか</li>
+<li>JS変換によるエラーなのか</li>
+</ul>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="改善点"><a class="header" href="#改善点">改善点</a></h1>
+<ul>
+<li>UI改善</li>
+<li>リファクタリング
+<ul>
+<li>粒度を細かく分け過ぎているので、ある程度まとめたいと考えています。</li>
+</ul>
+</li>
+<li>機能追加
+<ul>
+<li>Export機能</li>
+<li>ブックマークへの自動タグ付け機能
+<ul>
+<li>このために機械学習を学ぶ予定です。</li>
+</ul>
+</li>
+<li>RSSリーダー機能</li>
+<li>ニュース収集機能</li>
+</ul>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="自分について"><a class="header" href="#自分について">自分について</a></h1>
+<h2 id="好きなプログラミング言語"><a class="header" href="#好きなプログラミング言語">好きなプログラミング言語</a></h2>
+<ul>
+<li>Rust</li>
+</ul>
+<h2 id="今興味のある技術"><a class="header" href="#今興味のある技術">今興味のある技術</a></h2>
+<ul>
+<li>機械学習
+<ul>
+<li>制作したアプリケーションへの応用</li>
+</ul>
+</li>
+<li>ハードウェア操作
+<ul>
+<li>Rustを学んだことがきっかけで興味が湧きました。</li>
+<li>ドローンの自動操縦</li>
+<li>ドローンカメラ映像による物体検出</li>
+</ul>
+</li>
+</ul>
+<h2 id="不安な分野"><a class="header" href="#不安な分野">不安な分野</a></h2>
+<ul>
+<li>Git開発フロー
+<ul>
+<li>Gitの高度な操作を使ったことがありません。</li>
+<li>Issueによるタスク管理？</li>
+<li>ブランチ？</li>
+</ul>
+</li>
+<li>チーム開発
+<ul>
+<li>経験なし</li>
+<li>コードレビュー？</li>
+<li>プルリクエスト？</li>
+<li>CI(継続的インテグレーション)？</li>
+</ul>
+</li>
+</ul>
+<h2 id="使用ツール"><a class="header" href="#使用ツール">使用ツール</a></h2>
+<ul>
+<li>Windows10</li>
+<li>VSCode(Neovim)</li>
+<li>Docker</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="仕事について"><a class="header" href="#仕事について">仕事について</a></h1>
+<h2 id="具体的な実績"><a class="header" href="#具体的な実績">具体的な実績</a></h2>
+<ul>
+<li>WordPressのプラグイン
+<ul>
+<li>設計、開発、公開、保守を担当</li>
+<li>使用技術
+<ul>
+<li>PHP</li>
+<li>JavaScript</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>上記プラグインのランディングページ制作
+<ul>
+<li>設計、開発、構築を担当</li>
+<li>使用技術
+<ul>
+<li>Bootstrap</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>自社サービスのREST APIサーバー
+<ul>
+<li>設計、開発、構築を担当</li>
+<li>使用技術
+<ul>
+<li>Python(Django, Django REST Framework, Flask)</li>
+<li>MongoDB</li>
+<li>MySQL</li>
+<li>Redis</li>
+<li>nginx</li>
+<li>AWS</li>
+<li>Postfix</li>
+</ul>
+</li>
+<li>特殊な要件
+<ul>
+<li>MySQLのテーブルを顧客ごとに動的に作成して運用</li>
+<li>メールサーバーを立ち上げて、メールのテキストをリクエストとして受け取って処理</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="やってきたこと"><a class="header" href="#やってきたこと">やってきたこと</a></h2>
+<ul>
+<li>条件と環境を考慮し、自ら調査をしながら慎重な構築を行うこと</li>
+<li>最低限のライブラリのみを使って低依存な開発を行うこと</li>
+<li>責任感を持った開発を行うこと</li>
+<li>設計などの思想について理解を深めようと努めながら日々の開発を行うこと</li>
+<li>エラーが起きたら、経緯、仮説、調査、原因、対処を記録して次に繋げること</li>
+</ul>
+<h2 id="できること"><a class="header" href="#できること">できること</a></h2>
+<ul>
+<li>粘り強くやり通します。
+<ul>
+<li>ブラウザの拡張機能をRustで作った例はほぼ無い中、試行錯誤しながら完成させました。</li>
+<li>どんなエラーにも諦めずに、様々な角度からアプローチを変えて調査し解決してきました。</li>
+<li>何度ゼロからのやり直しになっても、ポジティブに捉え、楽しみながら乗り越えてきました。</li>
+</ul>
+</li>
+<li>原則に従ったコードを書きます。
+<ul>
+<li>SOLID原則</li>
+<li>KISS原則</li>
+<li>DRY原則</li>
+<li>YAGNI原則</li>
+</ul>
+</li>
+<li>新たな技術を積極的に学びます。
+<ul>
+<li>未知の技術にも怯まず挑み、体得してきました。</li>
+<li>技術を学ぶための具体的な目標を立てて、モチベーションを高く維持してきました。</li>
+</ul>
+</li>
+</ul>
+<h2 id="やりたいこと"><a class="header" href="#やりたいこと">やりたいこと</a></h2>
+<ul>
+<li>Rust言語によるプログラミング</li>
+<li>新しい技術での開発や経験</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="assets/fzf.umd.js"></script>
+        <script src="assets/elasticlunr.js"></script>
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
