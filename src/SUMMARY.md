@@ -2,9 +2,7 @@
 
 [Introduction](README.md)
 
-- [Chapter 1](./chapter_1.md)
-
-- [アプリケーションについて](./about_application/README.md)
+- [制作したアプリケーションについて](./about_application/README.md)
     - [概要](./about_application/outline.md)
     - [スクリーンショット](./about_application/screenshot.md)
     - [開発モチベーション](./about_application/motivation.md)
