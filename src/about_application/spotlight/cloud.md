@@ -9,6 +9,8 @@
     - scratchイメージにバイナリファイルのみを組み込んで、軽量かつセキュアなコンテナを運用しています。
 ## Google Cloud Storage
 - リンク先のサイズ変更済みFaviconを保存しています。
+## Cloud Firestore
+- Black Listに登録されたTokenのIDなど、ユーザー制限についての情報を保管しています。
 ## CloudFlare
 - Pages
     - Viteを使って軽量化したコードを展開しています。
