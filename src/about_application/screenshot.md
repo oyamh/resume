@@ -21,3 +21,5 @@
 ## 編集
 ### 編集モード
 ![Edit Mode](images/edit-mode-with-annotation-focus.png)
+#### 複数行の一括編集
+![Edit Mode Multiple Rows](images/edit-mode-multiple-rows-trimmed.png)
