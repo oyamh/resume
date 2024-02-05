@@ -1,10 +1,12 @@
 # 仕事について
 
 ## 具体的な実績
-前の職場では人数が少なかったので、全て一人で開発を行っていました。
+当時の職場での開発メンバーは私一人だったので、一人で開発を行っていました。
 - WordPressのプラグイン
+    - 自社サービスをWordPress上で使いやすくするためのプラグインです。WordPressユーザーの自社サービスへの流入を狙って企画されました。
     - 設計、開発、公開、保守を担当
     - 使用技術
+        - WordPress
         - PHP
         - JavaScript
 - 上記プラグインのランディングページ制作
@@ -12,9 +14,10 @@
     - 使用技術
         - Bootstrap
 - 自社サービスのREST APIサーバー
+    - 自社サービスのデータをデータベースにコピーして、REST APIによって検索や追加ができるようにして、後々の新規サービスと連携させるために企画されました。
     - 設計、開発、構築を担当
     - 使用技術
-        - Python(Django, Django REST Framework, Flask)
+        - Python(Django, Django REST Framework)
         - MongoDB
         - MySQL
         - Redis
