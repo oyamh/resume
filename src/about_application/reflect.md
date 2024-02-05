@@ -32,8 +32,12 @@ RustをWebAssemblyとしてJavaScript上で動作させながら学んだため�
 - 開発環境構築
 - RustとJSのギャップ
     - メモリ管理方式
-    - 型の違い（u64型とBigInt型）
+    - 型のギャップ
+        - RustのString型や&str型と、JavaScriptのstring型
+        - Rustのu64型と、JavaScriptのBigInt型やUint8Array型
 - エラー原因の特定
     - Rust由来なのか
     - WebAssembly由来なのか
-    - JS変換によるエラーなのか
+    - JavaScriptへの変換が原因なのか
+    - DevToolsの問題なのか
+    - ブラウザが未対応なのか

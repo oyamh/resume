@@ -3,7 +3,7 @@
 [Introduction](README.md)
 
 - [制作したアプリケーションについて](./about_application/README.md)
-    - [概要](./about_application/outline.md)
+    - [概要とURL](./about_application/outline.md)
     - [スクリーンショット](./about_application/screenshot.md)
     - [開発モチベーション](./about_application/motivation.md)
     - [機能](./about_application/feature.md)
