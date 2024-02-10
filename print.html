@@ -419,14 +419,15 @@
 <li>上記三つは将来的なサーバーレス環境に最適</li>
 </ul>
 </li>
-<li>強い型束縛
+<li>強い型付け
 <ul>
+<li>型安全なコーディング</li>
 <li>効率的な開発に必要不可欠</li>
 </ul>
 </li>
 <li>ゼロコスト抽象化
 <ul>
-<li>Goではパフォーマンスの問題で躊躇していた抽象化が問題なく可能</li>
+<li>Goではパフォーマンスの問題で躊躇していた抽象化が遠慮なく可能</li>
 </ul>
 </li>
 </ul>
@@ -443,7 +444,15 @@
 <h2 id="マイクロサービス"><a class="header" href="#マイクロサービス">マイクロサービス</a></h2>
 <ul>
 <li>ブラウザ上のフロントエンドと複数のAPIサーバーが、それぞれ必要に応じてデータ通信を行います。</li>
-<li>認証情報はトークンとしてブラウザが保有し、HTTPヘッダーに付与して通信を行います。</li>
+<li>認証情報はトークンとしてユーザーのブラウザが保有し、HTTPヘッダーに付与して通信を行います。
+<ul>
+<li>各リソースAPIサーバー内で認証情報を検証できます。
+<ul>
+<li>アクセスする度に認証APIサーバーへ照会せずに済みます。</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <h2 id="クリーンアーキテクチャ"><a class="header" href="#クリーンアーキテクチャ">クリーンアーキテクチャ</a></h2>
 <ul>
@@ -634,8 +643,10 @@
 <ul>
 <li>ログインにはSNS(GitHub, Google)のOAuth認証APIを使っています。</li>
 <li>ログインに使われるCookieはHttpOnly属性やSecure属性を使ってセキュアにしています。</li>
-<li>ログインにはJWT形式のStateトークンを使って、よりセキュアなログインを実現しています。
+<li>ログインにはJWT形式のStateトークンを使って、よりセキュアなログインを実現しています。</li>
+<li>ログインに必要な情報を、署名したStateトークンと隠匿されたCookieのみで完結させています。
 <ul>
+<li>ログイン処理に関して、データベースやキャッシュサーバーへのアクセスを必要としません。</li>
 <li>署名されたStateトークンに埋め込んだNonce値と、HttpOnlyなCookieのNonce値とを組み合わせたHash値を、Stateトークンに埋め込んだHash値と一致検証して、ログインの正当性を判定しています。</li>
 </ul>
 </li>
@@ -661,11 +672,27 @@
 <h2 id="ログインフローの例"><a class="header" href="#ログインフローの例">ログインフローの例</a></h2>
 <h3 id="googleアカウントを利用したログインフロー"><a class="header" href="#googleアカウントを利用したログインフロー">Googleアカウントを利用したログインフロー</a></h3>
 <p>クリックでMermaid Live Editorを開きます。
-<a href="https://mermaid.live/edit#pako:eNp9U8FOg0AQ_ZXNnDTB2mIrsDE9mXjSi_FiSMgK07Ip7NRlMWrTf3cAUVBSDmR39u2bN292DpBShiChwtcaTYq3Wm2tKmPzVKEVF-u1eET7hlaKHIuCYvNADgVx5Odgiwat4qgymagcWbx5sZfrQ0q005gYYlopHO3QdJvjSZbK8T9p4S3P2cZSKXoyryfihS6RweX-PDYdS6u3ES6HLN4wdw-9YGiHHMoclH1HtC1Yd1poNC7RmXeCsy3H6m3uBG1-rrZejIHd0UCnql2eND0Y0U_YfwrYFNPjxuX89_lNFTr74_PIv179IOHAg-9lhalFN6qnT1CzoESbDU15NC1loj8jSs7VwBrmiVarNMWqGlfy216LG4tV3h-DByXaUumMH_0hNkLE4HIsMQbJy0zZXQyxOTKODaDHD5OCdLZGD-p9I_Z7QPrgXplnouEW5AHeQfrzYBaE14u570fLyF-EoQcfIJezVXQVrsKAAwFjjh58tvfns6j7rlYLfxVE86UHmGl-QvfdhLaDevwCXlZMJA"><img src="https://mermaid.ink/img/pako:eNp9U8FOg0AQ_ZXNnDTB2mIrsDE9mXjSi_FiSMgK07Ip7NRlMWrTf3cAUVBSDmR39u2bN292DpBShiChwtcaTYq3Wm2tKmPzVKEVF-u1eET7hlaKHIuCYvNADgVx5Odgiwat4qgymagcWbx5sZfrQ0q005gYYlopHO3QdJvjSZbK8T9p4S3P2cZSKXoyryfihS6RweX-PDYdS6u3ES6HLN4wdw-9YGiHHMoclH1HtC1Yd1poNC7RmXeCsy3H6m3uBG1-rrZejIHd0UCnql2eND0Y0U_YfwrYFNPjxuX89_lNFTr74_PIv179IOHAg-9lhalFN6qnT1CzoESbDU15NC1loj8jSs7VwBrmiVarNMWqGlfy216LG4tV3h-DByXaUumMH_0hNkLE4HIsMQbJy0zZXQyxOTKODaDHD5OCdLZGD-p9I_Z7QPrgXplnouEW5AHeQfrzYBaE14u570fLyF-EoQcfIJezVXQVrsKAAwFjjh58tvfns6j7rlYLfxVE86UHmGl-QvfdhLaDevwCXlZMJA?type=png" alt="Googleアカウントを利用したログインフロー" /></a></p>
+<a href="https://mermaid.live/edit#pako:eNqFU01PwzAM_SuRTyDCR0vZRAQ7IXGCC-KCKlWh9dZobTKSdGJM---4LR0NTHCpHPv52c-ut5CbAkGAw7cGdY53Si6srFP97NCy09mMPaFdoxWsxKoyqX40Hpkhzz6wQI1Wkjc3Zqkw04Z4mNQF82aJun8fSiylK9ltmHbyX9K-mvP0zTr0zas9nx21dHxIJ0PVSJh6dZzqPrmT0-oS42QeVuyhpwTtkePuRlO5N2ZRIYUrhdpnquB_cHYqrFqUnpn5PtV5YzEE9qFRn7LxZdauKKA_sJ2_gK2YARfK-T3etaxU8WO8wfyG7kcFRzP4Mh3mFn2gZyjQUEOZ0nPD_9v0vpUD-wkoqVYLa5kPrFrmOToXKvler8W5RVcOYeBQo62lKugmtqlmLAVfYo0pCDILaZcppHpHOBqAedroHIS3DXJoVm2zX_cDYi4rR96V1C_G1AOIniC28A4ijuKzSRJfJtdxchlNkosJhw2I5CyZxtOraBJNO3e04_DREUQcsFD0zzz0F9sd7u4TrjJT0A"><img src="https://mermaid.ink/img/pako:eNqFU01PwzAM_SuRTyDCR0vZRAQ7IXGCC-KCKlWh9dZobTKSdGJM---4LR0NTHCpHPv52c-ut5CbAkGAw7cGdY53Si6srFP97NCy09mMPaFdoxWsxKoyqX40Hpkhzz6wQI1Wkjc3Zqkw04Z4mNQF82aJun8fSiylK9ltmHbyX9K-mvP0zTr0zas9nx21dHxIJ0PVSJh6dZzqPrmT0-oS42QeVuyhpwTtkePuRlO5N2ZRIYUrhdpnquB_cHYqrFqUnpn5PtV5YzEE9qFRn7LxZdauKKA_sJ2_gK2YARfK-T3etaxU8WO8wfyG7kcFRzP4Mh3mFn2gZyjQUEOZ0nPD_9v0vpUD-wkoqVYLa5kPrFrmOToXKvler8W5RVcOYeBQo62lKugmtqlmLAVfYo0pCDILaZcppHpHOBqAedroHIS3DXJoVm2zX_cDYi4rR96V1C_G1AOIniC28A4ijuKzSRJfJtdxchlNkosJhw2I5CyZxtOraBJNO3e04_DREUQcsFD0zzz0F9sd7u4TrjJT0A?type=png" alt="Googleアカウントを利用したログインフロー" /></a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="反省"><a class="header" href="#反省">反省</a></h1>
 <p>制作には数え切れないほどの失敗がありました。</p>
 <h2 id="バックエンド"><a class="header" href="#バックエンド">バックエンド</a></h2>
-<h3 id="早すぎたデータベース冗長化"><a class="header" href="#早すぎたデータベース冗長化">早すぎたデータベース冗長化</a></h3>
+<h3 id="クリーンアーキテクチャの誤解go"><a class="header" href="#クリーンアーキテクチャの誤解go">クリーンアーキテクチャの誤解（Go）</a></h3>
+<p>クリーンアーキテクチャを曲解し、依存関係を希薄にし過ぎてしまいました。</p>
+<ul>
+<li>異なる層へのアクセスを全てインターフェイスでのアクセスに限定していました。
+<ul>
+<li>Entity層のデータ型へのアクセスを全てインターフェイス越しに行っていましたが、パフォーマンスに問題が出ていました。
+<ul>
+<li>Goではインターフェイスのメソッド呼び出しは重い処理でした。</li>
+</ul>
+</li>
+<li>Entity層のデータ型の利用を控え、プリミティブ型を多用するようになりました。</li>
+<li>その結果アンチパターンPrimitive Obsession(プリミティブ型への執着)に陥ってしまいました。</li>
+</ul>
+</li>
+</ul>
+<p>"依存していなければ正しい"という極端な考えになってしまっていました。</p>
+<h3 id="早すぎたデータベース冗長化mysql"><a class="header" href="#早すぎたデータベース冗長化mysql">早すぎたデータベース冗長化（MySQL）</a></h3>
 <p>設定を調べて試行錯誤を繰り返し、ようやく実現したものの、使いませんでした。</p>
 <ul>
 <li>費用の問題で、DBサーバーを一つしか用意できませんでした。</li>
@@ -673,14 +700,19 @@
 <li>知識を得ることで技術的不安を取り除けたものの、必要になってからでも良かったかもと感じています。</li>
 </ul>
 <h2 id="フロントエンド"><a class="header" href="#フロントエンド">フロントエンド</a></h2>
-<h3 id="検索フラグ解析"><a class="header" href="#検索フラグ解析">検索フラグ解析</a></h3>
-<p>複数のフラグを入力中に、全ての位置の入力で補完入力パネルを表示させるという、本来不要な機能に注力していました。</p>
+<h3 id="検索フラグ解析react-typescript"><a class="header" href="#検索フラグ解析react-typescript">検索フラグ解析（React, TypeScript）</a></h3>
+<p>複数のフラグを入力中に、全ての位置の入力で補完入力候補を表示させるという、本来不要な機能に注力していました。</p>
 <ul>
-<li>ユースケースを正しく想定できていませんでした。</li>
+<li>ユースケースを正しく想定できていませんでした。
+<ul>
+<li>本来なら最後のフラグの入力中にだけ補完入力候補を表示させれば十分でした。</li>
+<li>カーソルを前のフラグに移動させて再度入力する頻度は少なく、候補が表示されなくても許容できる範囲だったと考えています。</li>
+</ul>
+</li>
 <li>失敗を活かして、拡張機能の開発では改良した解析処理を実装しました。</li>
 </ul>
 <h2 id="拡張機能"><a class="header" href="#拡張機能">拡張機能</a></h2>
-<h3 id="ui設計"><a class="header" href="#ui設計">UI設計</a></h3>
+<h3 id="ui設計yew-rust"><a class="header" href="#ui設計yew-rust">UI設計（Yew, Rust）</a></h3>
 <p>ブックマーク追加ポップアップを対象のWebページのDOMに埋め込む形式で作っていましたが、ポップアップウィンドウ形式に変更しました。</p>
 <ul>
 <li>馴染みのあった有名企業の拡張機能のUIに影響されすぎて、判断が盲目になってしまいました。
@@ -708,7 +740,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="学習プロセス"><a class="header" href="#学習プロセス">学習プロセス</a></h3>
+<h3 id="学習プロセスrust"><a class="header" href="#学習プロセスrust">学習プロセス（Rust）</a></h3>
 <p>RustをWebAssemblyとしてJavaScript上で動作させながら学んだため、学習がより困難になったと感じています。</p>
 <ul>
 <li>開発環境構築</li>
@@ -756,14 +788,17 @@
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="自分について"><a class="header" href="#自分について">自分について</a></h1>
 <h2 id="好きなプログラミング言語使いたい言語"><a class="header" href="#好きなプログラミング言語使いたい言語">好きなプログラミング言語・使いたい言語</a></h2>
+<p>Rustを使いたいと考えています。</p>
 <ul>
-<li>Rustを使いたいと考えています。</li>
+<li>厳しいコンパイラによって安全なコードが書けるので、効率的なコーディングができるから</li>
+<li>抽象化の際にパフォーマンスを犠牲にすることがないので、何の遠慮もなくインターフェイス(Trait)が使えるから</li>
+<li>性能の面で、WebAssemblyとの相性がいいから</li>
 </ul>
 <h2 id="意識している開発スタイル"><a class="header" href="#意識している開発スタイル">意識している開発スタイル</a></h2>
 <ul>
 <li>データ型を最優先として、データ型より優先されてしまう人格クラス型などを作らないスタイル
 <ul>
-<li>データ型が求める出力への道筋をサポートをします。</li>
+<li>データ型が求める出力への道筋のサポートをします。</li>
 <li>複雑な処理には、それに必要な複数のデータ型を含むデータ型を作って対処します。</li>
 <li>データ型の振る舞いは分離された依存関係で実現します。</li>
 </ul>
@@ -792,6 +827,7 @@
 <li>Rustを学んだことがきっかけ</li>
 <li>ドローンの自動操縦</li>
 <li>ドローンカメラ映像による物体検出</li>
+<li>電子工作</li>
 </ul>
 </li>
 </ul>
