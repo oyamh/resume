@@ -202,8 +202,9 @@
 </li>
 <li>複合的な操作を実現するために、正規化の余地を残しています。
 <ul>
-<li>フォルダもタグもブックマークとして同じテーブルに入れています。
+<li>フォルダやタグもブックマークも同じテーブルに入れています。
 <ul>
+<li>ブックマークに対する操作と同じ操作を可能にします。</li>
 <li>フォルダにタグを付けたり、タグ自体にもタグを付けることができます。</li>
 </ul>
 </li>
@@ -213,7 +214,7 @@
 </li>
 <li>ORM(Object Relational Mapping)を使わずに実装
 <ul>
-<li>事前にSQLを定義し、Stored Procedureとして使用しています。
+<li>事前にSQLを定義し、Stored Procedureとして実行しています。
 <ul>
 <li>Placeholder機能を使うことで、セキュアなSQLを構築できます。</li>
 </ul>
@@ -221,8 +222,8 @@
 <li>検索では、サーバー内でSQLを動的に構築して高度な検索を実現しています。
 <ul>
 <li>検索クエリに応じて、WHERE句とINNER JOIN句を動的に構築しています。</li>
-<li>Stored ProcedureとPlaceholderを使うことで、SQLをセキュアに保っています。</li>
-<li>フォルダ検索の場合には、WITH RECURSIVE句を使ってフォルダの再帰的な検索ができます。</li>
+<li>Stored ProcedureとPlaceholderを使うことで、SQLをセキュアに実行しています。</li>
+<li>フォルダ検索の場合には、WITH RECURSIVE句を使ってフォルダ階層の再帰的な検索ができます。</li>
 </ul>
 </li>
 </ul>

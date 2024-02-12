@@ -176,7 +176,7 @@
                     <main>
                         <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
 <p>これは制作したアプリケーションの紹介を兼ねたポートフォリオです。</p>
-<p>各項目は可能な限り簡潔に記載したつもりです。ぜひ最後までお目通しいただければ幸いです。
+<p>各項目は可能な限り簡潔に記載しました。最後までお目通しいただければ幸いです。
 よろしくお願いいたします。</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="制作したアプリケーションについて"><a class="header" href="#制作したアプリケーションについて">制作したアプリケーションについて</a></h1>
 <p>制作したアプリケーションについて説明します。</p>
@@ -469,8 +469,9 @@
 </li>
 <li>複合的な操作を実現するために、正規化の余地を残しています。
 <ul>
-<li>フォルダもタグもブックマークとして同じテーブルに入れています。
+<li>フォルダやタグもブックマークも同じテーブルに入れています。
 <ul>
+<li>ブックマークに対する操作と同じ操作を可能にします。</li>
 <li>フォルダにタグを付けたり、タグ自体にもタグを付けることができます。</li>
 </ul>
 </li>
@@ -480,7 +481,7 @@
 </li>
 <li>ORM(Object Relational Mapping)を使わずに実装
 <ul>
-<li>事前にSQLを定義し、Stored Procedureとして使用しています。
+<li>事前にSQLを定義し、Stored Procedureとして実行しています。
 <ul>
 <li>Placeholder機能を使うことで、セキュアなSQLを構築できます。</li>
 </ul>
@@ -488,8 +489,8 @@
 <li>検索では、サーバー内でSQLを動的に構築して高度な検索を実現しています。
 <ul>
 <li>検索クエリに応じて、WHERE句とINNER JOIN句を動的に構築しています。</li>
-<li>Stored ProcedureとPlaceholderを使うことで、SQLをセキュアに保っています。</li>
-<li>フォルダ検索の場合には、WITH RECURSIVE句を使ってフォルダの再帰的な検索ができます。</li>
+<li>Stored ProcedureとPlaceholderを使うことで、SQLをセキュアに実行しています。</li>
+<li>フォルダ検索の場合には、WITH RECURSIVE句を使ってフォルダ階層の再帰的な検索ができます。</li>
 </ul>
 </li>
 </ul>
@@ -792,7 +793,7 @@
 <ul>
 <li>厳しいコンパイラによって安全なコードが書けるので、効率的なコーディングができるから</li>
 <li>抽象化の際にパフォーマンスを犠牲にすることがないので、何の遠慮もなくインターフェイス(Trait)が使えるから</li>
-<li>性能の面で、WebAssemblyとの相性がいいから</li>
+<li>性能の面でWebAssemblyとの相性がいいから</li>
 </ul>
 <h2 id="意識している開発スタイル"><a class="header" href="#意識している開発スタイル">意識している開発スタイル</a></h2>
 <ul>
