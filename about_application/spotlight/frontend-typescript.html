@@ -212,12 +212,145 @@
 </li>
 </ul>
 </li>
+<li>ReduxをReactとTypeScriptの機能で実現しました。
+<ul>
+<li>Reduxを理解するため、react-reduxを使わずに実装しました。</li>
+</ul>
+</li>
 </ul>
 <h2 id="grpc通信"><a class="header" href="#grpc通信">gRPC通信</a></h2>
 <ul>
 <li>gRPCを使って通信を行います。</li>
 <li>通信データには、Protocol Bufferスキーマで定義されたデータ型を使っています。</li>
 <li>Connectで出力した型安全なコードを使ってサーバーと通信を行います。</li>
+</ul>
+<hr />
+<h1 id="実装内容例a"><a class="header" href="#実装内容例a">実装内容例A</a></h1>
+<h2 id="課題"><a class="header" href="#課題">課題</a></h2>
+<ul>
+<li>Single Page ApplicationでのURLルーティングの実現</li>
+<li>TypeScriptでのReactを使ったフロントエンド</li>
+</ul>
+<h2 id="機能の内容"><a class="header" href="#機能の内容">機能の内容</a></h2>
+<ul>
+<li>検索したら検索クエリをURLに変換して、そのURLへ移動</li>
+<li>クリックしたフォルダやタグに該当するURLへ移動</li>
+<li>URLをパースして検索クエリを構築してサーバーに送信</li>
+</ul>
+<h2 id="工夫した点"><a class="header" href="#工夫した点">工夫した点</a></h2>
+<ul>
+<li>検索クエリの状態とURLを相互に変換可能</li>
+<li>ReactのContext APIを使って表示内容の状態変化をレンダリング</li>
+</ul>
+<h2 id="重視した点"><a class="header" href="#重視した点">重視した点</a></h2>
+<ul>
+<li>Reduxによる状態変化の管理
+<ul>
+<li>状態を変更するパターンを限定</li>
+<li>状態をImmutableな値として扱う</li>
+</ul>
+</li>
+<li>過剰な依存を避ける
+<ul>
+<li>Reduxはreact-reduxを使わずに実装
+<ul>
+<li>ReactのuseReducer関数とuseContext関数を使って実装</li>
+<li>ActionをTypeScriptの型として定義することで、型システムを使って状態変化をパターン化</li>
+</ul>
+</li>
+<li>ルーティングはreact-routerを使わずに実装
+<ul>
+<li>ReactのContext APIを使ってレンダリング</li>
+<li>ブラウザのHistory APIを使って遷移</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="使用した技術"><a class="header" href="#使用した技術">使用した技術</a></h2>
+<ul>
+<li>TypeScript
+<ul>
+<li>React
+<ul>
+<li>Context API</li>
+<li>Reducer</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ブラウザAPI
+<ul>
+<li>Hisotry API</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h1 id="実装内容例b"><a class="header" href="#実装内容例b">実装内容例B</a></h1>
+<h2 id="課題-1"><a class="header" href="#課題-1">課題</a></h2>
+<ul>
+<li>可変レイアウトの実現</li>
+<li>TypeScriptでReactを使ったフロントエンド</li>
+</ul>
+<h2 id="機能の内容-1"><a class="header" href="#機能の内容-1">機能の内容</a></h2>
+<ul>
+<li>リサイズバー(Resize Bar)要素をドラッグして領域をリサイズする</li>
+<li>リサイズした値をブラウザに保存する</li>
+<li>表のカラムの順番を入れ替えたり、カラム自体を消去できる</li>
+</ul>
+<h2 id="工夫した点-1"><a class="header" href="#工夫した点-1">工夫した点</a></h2>
+<ul>
+<li>リサイズバーはコンポーネント化して複数の領域で使用</li>
+<li>CSS GridとCSSグローバル変数を組み合わせてレイアウトを定義
+<ul>
+<li>CSSグローバル変数を書き換えることでリサイズ</li>
+<li>grid-template-columnsを書き換えることでカラムの表示と非表示とを切り替え</li>
+</ul>
+</li>
+<li>CSS Gridを入れ子構造にして各Gridのレイアウト上の役割を分割</li>
+<li>LocalStorageで領域サイズを保存
+<ul>
+<li>アクセス時に領域サイズを読み込んで画面上で再現</li>
+</ul>
+</li>
+</ul>
+<h2 id="重視した点-1"><a class="header" href="#重視した点-1">重視した点</a></h2>
+<ul>
+<li>パフォーマンス重視
+<ul>
+<li>JavaScript外部ライブラリを使わずに、ほぼCSSの機能を使って実装</li>
+<li>リサイズはrequestAnimationFrame関数を使って描画</li>
+</ul>
+</li>
+<li>Reactの再レンダリングの抑制
+<ul>
+<li>リサイズの開始と終了時にのみContextの値を上書き</li>
+<li>React.useEffect関数でのレンダリング制御</li>
+<li>React.memo関数でのメモ化による再レンダリングのスキップ</li>
+</ul>
+</li>
+</ul>
+<h2 id="問題点"><a class="header" href="#問題点">問題点</a></h2>
+<ul>
+<li>CSS GridとCSSグローバル変数の組み合わせは保守性が悪い
+<ul>
+<li>ツールやエディタによるサポートがない</li>
+</ul>
+</li>
+</ul>
+<h2 id="使用した技術-1"><a class="header" href="#使用した技術-1">使用した技術</a></h2>
+<ul>
+<li>CSS
+<ul>
+<li>Grid</li>
+<li>グローバル変数</li>
+</ul>
+</li>
+<li>ブラウザAPI
+<ul>
+<li>localStorage</li>
+</ul>
+</li>
 </ul>
 
                     </main>

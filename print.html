@@ -522,6 +522,92 @@
 </ul>
 </li>
 </ul>
+<hr />
+<h1 id="実装内容の例"><a class="header" href="#実装内容の例">実装内容の例</a></h1>
+<h2 id="課題"><a class="header" href="#課題">課題</a></h2>
+<ul>
+<li>検索クエリの組み合わせによる柔軟な検索の実現</li>
+<li>Goを使ったバックエンド</li>
+<li>MySQLデータベース</li>
+</ul>
+<h2 id="機能の内容"><a class="header" href="#機能の内容">機能の内容</a></h2>
+<ul>
+<li>リクエストとして検索クエリの配列を受け取る</li>
+<li>データベースに検索SQLを実行させて検索結果を引き出す</li>
+<li>レスポンスとして検索結果を表すブックマークの配列を送り返す</li>
+</ul>
+<h2 id="工夫した点"><a class="header" href="#工夫した点">工夫した点</a></h2>
+<ul>
+<li>検索クエリはダウンキャストで判別
+<ul>
+<li>内部的には検索クエリはProtobufのoneofで定義されたものを受け取る
+<ul>
+<li>oneofは別々の型の配列</li>
+</ul>
+</li>
+<li>Protobufの型ごとにGoで定義した検索クエリ型でWrapして、各クエリを空のインターフェイス(interface{})として返すQueueに変換する</li>
+<li>値を使う際にはQueueから取り出した空のインターフェイスにダウンキャスト(型アサーション)を行い、どの検索クエリ型なのかを判別してクエリの値を引き出す</li>
+</ul>
+</li>
+<li>検索クエリに沿ったSQLを文字列で構築
+<ul>
+<li>検索クエリに合わせてWHERE句のパーツSQLを定義しておく</li>
+<li>テーブル結合を使って複数のテーブルから同時にデータを引き出す</li>
+<li>ベースとなるSQLとして通常検索用のSQLと再帰的な検索用のSQLを定義しておく
+<ul>
+<li>再帰的な検索はWITH RECURSIVE句をベースとして定義する</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="重視した点"><a class="header" href="#重視した点">重視した点</a></h2>
+<ul>
+<li>セキュリティの安全性
+<ul>
+<li>SQLを動的に構築する際にはSQLインジェクション対策が必要
+<ul>
+<li>SQLのプレースホルダを使う</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>データを引き出す速度
+<ul>
+<li>一度のSQL実行で全てのデータを引き出す</li>
+</ul>
+</li>
+</ul>
+<h2 id="問題点"><a class="header" href="#問題点">問題点</a></h2>
+<ul>
+<li>Goのダウンキャスト使用によるパフォーマンスの低下
+<ul>
+<li>具体的な型を使うよりも速度が落ちてしまう</li>
+<li>処理する検索クエリの量はパフォーマンスに影響を与えるほど多くはないはずなので容認</li>
+</ul>
+</li>
+<li>SQLの保守性の低下
+<ul>
+<li>SQLの構築をGoの文字列で行うため、エディタの補助を受けにくい</li>
+</ul>
+</li>
+</ul>
+<h2 id="使用した技術"><a class="header" href="#使用した技術">使用した技術</a></h2>
+<ul>
+<li>Go
+<ul>
+<li>インターフェイス</li>
+<li>ダウンキャスト</li>
+</ul>
+</li>
+<li>MySQL
+<ul>
+<li>ストアドプロシージャ</li>
+<li>プレースホルダ</li>
+<li>テーブル結合</li>
+</ul>
+</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="フロントエンド開発typescript"><a class="header" href="#フロントエンド開発typescript">フロントエンド開発(TypeScript)</a></h1>
 <h2 id="外部依存の回避"><a class="header" href="#外部依存の回避">外部依存の回避</a></h2>
 <ul>
@@ -561,12 +647,145 @@
 </li>
 </ul>
 </li>
+<li>ReduxをReactとTypeScriptの機能で実現しました。
+<ul>
+<li>Reduxを理解するため、react-reduxを使わずに実装しました。</li>
+</ul>
+</li>
 </ul>
 <h2 id="grpc通信-1"><a class="header" href="#grpc通信-1">gRPC通信</a></h2>
 <ul>
 <li>gRPCを使って通信を行います。</li>
 <li>通信データには、Protocol Bufferスキーマで定義されたデータ型を使っています。</li>
 <li>Connectで出力した型安全なコードを使ってサーバーと通信を行います。</li>
+</ul>
+<hr />
+<h1 id="実装内容例a"><a class="header" href="#実装内容例a">実装内容例A</a></h1>
+<h2 id="課題-1"><a class="header" href="#課題-1">課題</a></h2>
+<ul>
+<li>Single Page ApplicationでのURLルーティングの実現</li>
+<li>TypeScriptでのReactを使ったフロントエンド</li>
+</ul>
+<h2 id="機能の内容-1"><a class="header" href="#機能の内容-1">機能の内容</a></h2>
+<ul>
+<li>検索したら検索クエリをURLに変換して、そのURLへ移動</li>
+<li>クリックしたフォルダやタグに該当するURLへ移動</li>
+<li>URLをパースして検索クエリを構築してサーバーに送信</li>
+</ul>
+<h2 id="工夫した点-1"><a class="header" href="#工夫した点-1">工夫した点</a></h2>
+<ul>
+<li>検索クエリの状態とURLを相互に変換可能</li>
+<li>ReactのContext APIを使って表示内容の状態変化をレンダリング</li>
+</ul>
+<h2 id="重視した点-1"><a class="header" href="#重視した点-1">重視した点</a></h2>
+<ul>
+<li>Reduxによる状態変化の管理
+<ul>
+<li>状態を変更するパターンを限定</li>
+<li>状態をImmutableな値として扱う</li>
+</ul>
+</li>
+<li>過剰な依存を避ける
+<ul>
+<li>Reduxはreact-reduxを使わずに実装
+<ul>
+<li>ReactのuseReducer関数とuseContext関数を使って実装</li>
+<li>ActionをTypeScriptの型として定義することで、型システムを使って状態変化をパターン化</li>
+</ul>
+</li>
+<li>ルーティングはreact-routerを使わずに実装
+<ul>
+<li>ReactのContext APIを使ってレンダリング</li>
+<li>ブラウザのHistory APIを使って遷移</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="使用した技術-1"><a class="header" href="#使用した技術-1">使用した技術</a></h2>
+<ul>
+<li>TypeScript
+<ul>
+<li>React
+<ul>
+<li>Context API</li>
+<li>Reducer</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ブラウザAPI
+<ul>
+<li>Hisotry API</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h1 id="実装内容例b"><a class="header" href="#実装内容例b">実装内容例B</a></h1>
+<h2 id="課題-2"><a class="header" href="#課題-2">課題</a></h2>
+<ul>
+<li>可変レイアウトの実現</li>
+<li>TypeScriptでReactを使ったフロントエンド</li>
+</ul>
+<h2 id="機能の内容-2"><a class="header" href="#機能の内容-2">機能の内容</a></h2>
+<ul>
+<li>リサイズバー(Resize Bar)要素をドラッグして領域をリサイズする</li>
+<li>リサイズした値をブラウザに保存する</li>
+<li>表のカラムの順番を入れ替えたり、カラム自体を消去できる</li>
+</ul>
+<h2 id="工夫した点-2"><a class="header" href="#工夫した点-2">工夫した点</a></h2>
+<ul>
+<li>リサイズバーはコンポーネント化して複数の領域で使用</li>
+<li>CSS GridとCSSグローバル変数を組み合わせてレイアウトを定義
+<ul>
+<li>CSSグローバル変数を書き換えることでリサイズ</li>
+<li>grid-template-columnsを書き換えることでカラムの表示と非表示とを切り替え</li>
+</ul>
+</li>
+<li>CSS Gridを入れ子構造にして各Gridのレイアウト上の役割を分割</li>
+<li>LocalStorageで領域サイズを保存
+<ul>
+<li>アクセス時に領域サイズを読み込んで画面上で再現</li>
+</ul>
+</li>
+</ul>
+<h2 id="重視した点-2"><a class="header" href="#重視した点-2">重視した点</a></h2>
+<ul>
+<li>パフォーマンス重視
+<ul>
+<li>JavaScript外部ライブラリを使わずに、ほぼCSSの機能を使って実装</li>
+<li>リサイズはrequestAnimationFrame関数を使って描画</li>
+</ul>
+</li>
+<li>Reactの再レンダリングの抑制
+<ul>
+<li>リサイズの開始と終了時にのみContextの値を上書き</li>
+<li>React.useEffect関数でのレンダリング制御</li>
+<li>React.memo関数でのメモ化による再レンダリングのスキップ</li>
+</ul>
+</li>
+</ul>
+<h2 id="問題点-1"><a class="header" href="#問題点-1">問題点</a></h2>
+<ul>
+<li>CSS GridとCSSグローバル変数の組み合わせは保守性が悪い
+<ul>
+<li>ツールやエディタによるサポートがない</li>
+</ul>
+</li>
+</ul>
+<h2 id="使用した技術-2"><a class="header" href="#使用した技術-2">使用した技術</a></h2>
+<ul>
+<li>CSS
+<ul>
+<li>Grid</li>
+<li>グローバル変数</li>
+</ul>
+</li>
+<li>ブラウザAPI
+<ul>
+<li>localStorage</li>
+</ul>
+</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="拡張機能開発rust"><a class="header" href="#拡張機能開発rust">拡張機能開発(Rust)</a></h1>
 <h2 id="rustによるwebassembly"><a class="header" href="#rustによるwebassembly">RustによるWebAssembly</a></h2>
@@ -588,6 +807,106 @@
 <li>gRPCを使って通信を行います。</li>
 <li>通信データには、Protocol Bufferスキーマで定義されたデータ型を使っています。</li>
 <li>Connectで出力した型安全なコードを使ってサーバーと通信を行います。</li>
+</ul>
+<hr />
+<h1 id="実装内容の例a"><a class="header" href="#実装内容の例a">実装内容の例A</a></h1>
+<h2 id="課題-3"><a class="header" href="#課題-3">課題</a></h2>
+<ul>
+<li>フォルダ名やタグ名の補完入力</li>
+</ul>
+<h2 id="機能の内容-3"><a class="header" href="#機能の内容-3">機能の内容</a></h2>
+<ul>
+<li>テキストボックスが補完入力の対象なら入力内容に応じて補完候補を表示</li>
+<li>入力すると即候補一覧が表示</li>
+<li>マウスかキーボードで候補を選択</li>
+<li>選択した候補がテキストボックスに自動入力</li>
+</ul>
+<h2 id="工夫した点-3"><a class="header" href="#工夫した点-3">工夫した点</a></h2>
+<ul>
+<li>Fuzzy検索の形で補完候補を選定</li>
+</ul>
+<h2 id="重視した点-3"><a class="header" href="#重視した点-3">重視した点</a></h2>
+<ul>
+<li>補完候補の選定の速度パフォーマンス
+<ul>
+<li>入力文字列一致の検証は最低限の検証のみを行う
+<ul>
+<li>全て含まれているか</li>
+<li>順番通り含まれているか</li>
+<li>以上の検証をパスしたものだけスコア算出開始</li>
+</ul>
+</li>
+<li>スコア算出のアルゴリズムをできる限りシンプルにする
+<ul>
+<li>一致していたらボーナス</li>
+<li>連鎖していたらボーナス</li>
+<li>頭文字が一致していたらボーナス</li>
+<li>これらが満たされない場合はペナルティ</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="問題点-2"><a class="header" href="#問題点-2">問題点</a></h2>
+<ul>
+<li>補完候補のヒット率の低下が予想された
+<ul>
+<li>現状不満は感じない</li>
+</ul>
+</li>
+</ul>
+<h2 id="使用した技術-3"><a class="header" href="#使用した技術-3">使用した技術</a></h2>
+<ul>
+<li>Rust</li>
+</ul>
+<hr />
+<h1 id="実装内容の例b"><a class="header" href="#実装内容の例b">実装内容の例B</a></h1>
+<h2 id="課題-4"><a class="header" href="#課題-4">課題</a></h2>
+<ul>
+<li>モジュール依存関係の分離</li>
+</ul>
+<h2 id="機能の内容-4"><a class="header" href="#機能の内容-4">機能の内容</a></h2>
+<ul>
+<li>機能の追加に応じて依存関係を付け足せる</li>
+<li>機能の削除に応じて依存関係を切り離せる</li>
+<li>テスト時には依存関係をMockと入れ替えられる</li>
+</ul>
+<h2 id="工夫した点-4"><a class="header" href="#工夫した点-4">工夫した点</a></h2>
+<ul>
+<li>依存関係には必ずインターフェイスでアクセス
+<ul>
+<li>依存関係をContextモジュールに収めて、インターフェイス(Trait)でContext構造体から依存関係を取り出して、依存する機能を使う
+<ul>
+<li>メソッドとして機能をまとめたTraitを定義する</li>
+<li>そのTraitを返すProvider Traitを定義する</li>
+<li>Context構造体のプロパティに依存する構造体を定義する</li>
+<li>依存する構造体を返すProvider TraitのprovideメソッドをContext構造体に実装する</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="重視した点-4"><a class="header" href="#重視した点-4">重視した点</a></h2>
+<ul>
+<li>依存関係をContextモジュールに集約
+<ul>
+<li>新しく依存を追加する時にはContextを追加するだけ</li>
+<li>不要な依存を削除する時にはContextを削除するだけ</li>
+<li>Mockと入れ替える時にはMock用Contextと入れ替えるだけ</li>
+</ul>
+</li>
+</ul>
+<h2 id="問題点-3"><a class="header" href="#問題点-3">問題点</a></h2>
+<ul>
+<li>機能ごとにContextモジュールを作ってしまったので、粒度が小さすぎる
+<ul>
+<li>機能ごとよりも、単純な依存関係のまとまりとしてContextモジュールを作るべきか検証が必要</li>
+</ul>
+</li>
+</ul>
+<h2 id="使用した技術-4"><a class="header" href="#使用した技術-4">使用した技術</a></h2>
+<ul>
+<li>Rust</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="クラウドネットワーク構築"><a class="header" href="#クラウドネットワーク構築">クラウド＆ネットワーク構築</a></h1>
 <h2 id="google-cloud-engine"><a class="header" href="#google-cloud-engine">Google Cloud Engine</a></h2>
@@ -675,7 +994,7 @@
 <p>クリックでMermaid Live Editorを開きます。
 <a href="https://mermaid.live/edit#pako:eNqFU01PwzAM_SuRTyDCR0vZRAQ7IXGCC-KCKlWh9dZobTKSdGJM---4LR0NTHCpHPv52c-ut5CbAkGAw7cGdY53Si6srFP97NCy09mMPaFdoxWsxKoyqX40Hpkhzz6wQI1Wkjc3Zqkw04Z4mNQF82aJun8fSiylK9ltmHbyX9K-mvP0zTr0zas9nx21dHxIJ0PVSJh6dZzqPrmT0-oS42QeVuyhpwTtkePuRlO5N2ZRIYUrhdpnquB_cHYqrFqUnpn5PtV5YzEE9qFRn7LxZdauKKA_sJ2_gK2YARfK-T3etaxU8WO8wfyG7kcFRzP4Mh3mFn2gZyjQUEOZ0nPD_9v0vpUD-wkoqVYLa5kPrFrmOToXKvler8W5RVcOYeBQo62lKugmtqlmLAVfYo0pCDILaZcppHpHOBqAedroHIS3DXJoVm2zX_cDYi4rR96V1C_G1AOIniC28A4ijuKzSRJfJtdxchlNkosJhw2I5CyZxtOraBJNO3e04_DREUQcsFD0zzz0F9sd7u4TrjJT0A"><img src="https://mermaid.ink/img/pako:eNqFU01PwzAM_SuRTyDCR0vZRAQ7IXGCC-KCKlWh9dZobTKSdGJM---4LR0NTHCpHPv52c-ut5CbAkGAw7cGdY53Si6srFP97NCy09mMPaFdoxWsxKoyqX40Hpkhzz6wQI1Wkjc3Zqkw04Z4mNQF82aJun8fSiylK9ltmHbyX9K-mvP0zTr0zas9nx21dHxIJ0PVSJh6dZzqPrmT0-oS42QeVuyhpwTtkePuRlO5N2ZRIYUrhdpnquB_cHYqrFqUnpn5PtV5YzEE9qFRn7LxZdauKKA_sJ2_gK2YARfK-T3etaxU8WO8wfyG7kcFRzP4Mh3mFn2gZyjQUEOZ0nPD_9v0vpUD-wkoqVYLa5kPrFrmOToXKvler8W5RVcOYeBQo62lKugmtqlmLAVfYo0pCDILaZcppHpHOBqAedroHIS3DXJoVm2zX_cDYi4rR96V1C_G1AOIniC28A4ijuKzSRJfJtdxchlNkosJhw2I5CyZxtOraBJNO3e04_DREUQcsFD0zzz0F9sd7u4TrjJT0A?type=png" alt="Googleアカウントを利用したログインフロー" /></a></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="反省"><a class="header" href="#反省">反省</a></h1>
-<p>制作には数え切れないほどの失敗がありました。</p>
+<p>制作には数え切れないほどの反省点がありました。</p>
 <h2 id="バックエンド"><a class="header" href="#バックエンド">バックエンド</a></h2>
 <h3 id="クリーンアーキテクチャの誤解go"><a class="header" href="#クリーンアーキテクチャの誤解go">クリーンアーキテクチャの誤解（Go）</a></h3>
 <p>クリーンアーキテクチャを曲解し、依存関係を希薄にし過ぎてしまいました。</p>
@@ -789,17 +1108,56 @@
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="自分について"><a class="header" href="#自分について">自分について</a></h1>
 <h2 id="好きなプログラミング言語使いたい言語"><a class="header" href="#好きなプログラミング言語使いたい言語">好きなプログラミング言語・使いたい言語</a></h2>
-<p>Rustを使いたいと考えています。</p>
+<p>できればRustを使いたいと考えています。</p>
 <ul>
-<li>厳しいコンパイラによって安全なコードが書けるので、効率的なコーディングができるから</li>
-<li>抽象化の際にパフォーマンスを犠牲にすることがないので、何の遠慮もなくインターフェイス(Trait)が使えるから</li>
-<li>性能の面でWebAssemblyとの相性がいいから</li>
+<li>効率的なコーディングができるから
+<ul>
+<li>厳しいコンパイラによって安全なコードが書ける</li>
+<li>エラーメッセージからの解決策が分かりやすい</li>
+</ul>
+</li>
+<li>何の躊躇もなくインターフェイス(Trait)が使えるから
+<ul>
+<li>抽象化の際にパフォーマンスを犠牲にすることがない</li>
+</ul>
+</li>
+<li>将来性を感じているから
+<ul>
+<li>バックエンド
+<ul>
+<li>実行速度</li>
+<li>メモリ効率</li>
+<li>コンテナ上での利用
+<ul>
+<li>WebAssemblyのサンドボックス機能による安全性</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>フロントエンド
+<ul>
+<li>ブラウザ上でのWebAssembly実行</li>
+</ul>
+</li>
+<li>組み込み
+<ul>
+<li>バイナリサイズの軽量さや性能の高さから、組み込みとの親和性</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>多くのことを教わったから
+<ul>
+<li>ずっと曖昧だったプログラミングのルールへの理解が深まった</li>
+<li>他の言語を使う場合にも応用可能なノウハウを学べた</li>
+</ul>
+</li>
 </ul>
 <h2 id="意識している開発スタイル"><a class="header" href="#意識している開発スタイル">意識している開発スタイル</a></h2>
 <ul>
-<li>データ型を最優先として、データ型より優先されてしまう人格クラス型などを作らないスタイル
+<li>データ型を最優先の存在として、大きな存在になりがちな人格クラスを作らないスタイル
 <ul>
-<li>データ型が求める出力への道筋のサポートをします。</li>
+<li>データ型が求める出力への道筋のサポートをしていく。</li>
 <li>複雑な処理には、それに必要な複数のデータ型を含むデータ型を作って対処します。</li>
 <li>データ型の振る舞いは分離された依存関係で実現します。</li>
 </ul>
@@ -812,43 +1170,75 @@
 <li>外部ライブラリでの問題を解決する時間よりも、最小のものを自作する時間の方が短くなるはずと考えています。</li>
 </ul>
 </li>
+<li>あくまでもなるべく。適切な大きさのシンプルなライブラリは迷わず使います。</li>
 </ul>
 </li>
 </ul>
-<h2 id="今興味のある技術"><a class="header" href="#今興味のある技術">今興味のある技術</a></h2>
+<h2 id="今興味のあること"><a class="header" href="#今興味のあること">今興味のあること</a></h2>
 <ul>
-<li>機械学習
-<ul>
-<li>制作したアプリケーションでの活用</li>
-<li>Webページのコンテンツ分類</li>
-</ul>
-</li>
-<li>ハードウェア操作
-<ul>
-<li>Rustを学んだことがきっかけ</li>
-<li>ドローンの自動操縦</li>
-<li>ドローンカメラ映像による物体検出</li>
-<li>電子工作</li>
-</ul>
-</li>
-</ul>
-<h2 id="不安な分野"><a class="header" href="#不安な分野">不安な分野</a></h2>
-<ul>
-<li>Git開発フロー
-<ul>
-<li>Gitの高度な操作を使ったことがありません。</li>
-<li>Issueによるタスク管理？</li>
-<li>ブランチ？</li>
-</ul>
-</li>
 <li>チーム開発
 <ul>
-<li>経験なし</li>
-<li>コードレビュー？</li>
-<li>プルリクエスト？</li>
-<li>CI(継続的インテグレーション)？</li>
+<li>色々な人たちと同じ目標を達成したい</li>
+<li>技術力を向上させたい</li>
 </ul>
 </li>
+<li>効率的なプログラミング
+<ul>
+<li>設計手法</li>
+<li>最適化手法</li>
+<li>テスト手法</li>
+<li>AIの活用</li>
+</ul>
+</li>
+<li>機械学習
+<ul>
+<li>制作したアプリケーションでの活用したい</li>
+<li>Webページのコンテンツ分類をしたい</li>
+</ul>
+</li>
+<li>電子工作
+<ul>
+<li>Rustを使って現実世界で使えるツールを作りたい</li>
+</ul>
+</li>
+<li>ドローン
+<ul>
+<li>ドローンの自動操縦をしたい</li>
+<li>ドローンのカメラによる物体検出で何か作ってみたい</li>
+</ul>
+</li>
+<li>VR
+<ul>
+<li>VR空間上で人を楽しませたい</li>
+</ul>
+</li>
+</ul>
+<h2 id="趣味"><a class="header" href="#趣味">趣味</a></h2>
+<ul>
+<li>散歩</li>
+<li>筋力トレーニング
+<ul>
+<li>健康のため</li>
+<li>業務効率化のため
+<ul>
+<li>腰を痛めたときに仕事に集中できなくなってしまったので、その予防</li>
+<li>リフレッシュ</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="趣味としてやりたいこと"><a class="header" href="#趣味としてやりたいこと">趣味としてやりたいこと</a></h3>
+<ul>
+<li>人との会話
+<ul>
+<li>知らない人とも</li>
+<li>人を楽しませる技術を学びたい</li>
+<li>VR上でも</li>
+<li>英語も？</li>
+</ul>
+</li>
+<li>食べ歩き</li>
 </ul>
 <h2 id="使用ツール"><a class="header" href="#使用ツール">使用ツール</a></h2>
 <ul>
@@ -885,7 +1275,7 @@
 </li>
 <li>自社サービスのREST APIサーバー
 <ul>
-<li>自社サービスのデータをデータベースにコピーして、REST APIによって検索や追加ができるようにして、後々の新規サービスと連携させるために企画されました。</li>
+<li>自社サービスのデータをデータベースにコピーして、REST APIによって検索や追加ができるようにし、後々の新規サービスと連携させるために企画されました。</li>
 <li>設計、開発、構築を担当</li>
 <li>使用技術
 <ul>
@@ -901,7 +1291,7 @@
 <li>特殊な要件
 <ul>
 <li>MySQLのテーブルを顧客ごとに動的に作成して運用</li>
-<li>メールサーバーを立ち上げて、メールのテキストをリクエストとして受け取って処理</li>
+<li>メールサーバーを立ち上げて、受信メールのテキストをリクエストとして受け取って処理</li>
 </ul>
 </li>
 </ul>
@@ -909,22 +1299,26 @@
 </ul>
 <h2 id="やってきたこと"><a class="header" href="#やってきたこと">やってきたこと</a></h2>
 <ul>
-<li>条件と環境を考慮し、自ら調査をしながら慎重な構築を行うこと</li>
+<li>条件と環境を考慮し、自ら調査をして慎重な構築を行うこと</li>
 <li>最低限のライブラリのみを使って低依存な開発を行うこと</li>
-<li>責任感を持った開発を行うこと</li>
+<li>責任感を持った開発を行うこと
+<ul>
+<li>意思決定の際には、状況と根拠を記録して、失敗したときに反省できるようにする</li>
+<li>エラーが起きたら、経緯、仮説、調査、原因、対処を記録して次に繋げる</li>
+</ul>
+</li>
 <li>設計などの思想について理解を深めようと努めながら日々の開発を行うこと</li>
-<li>エラーが起きたら、経緯、仮説、調査、原因、対処を記録して次に繋げること</li>
 </ul>
 <h2 id="できること"><a class="header" href="#できること">できること</a></h2>
 <ul>
-<li>粘り強くやり通します。
+<li>粘り強くやり通します
 <ul>
-<li>ブラウザの拡張機能をRustで作った例はほぼ無い中、試行錯誤しながら完成させました。</li>
-<li>どんなエラーにも諦めずに、様々な角度からアプローチを変えて調査し解決してきました。</li>
-<li>何度ゼロからのやり直しになっても、ポジティブに捉え、楽しみながら乗り越えてきました。</li>
+<li>ブラウザの拡張機能をRustで作った例はほぼ無い中、試行錯誤しながら完成させました</li>
+<li>どんなエラーにも諦めずに、様々な角度からアプローチを変えて調査し解決してきました</li>
+<li>何度ゼロからのやり直しになっても、ポジティブに捉え、楽しみながら乗り越えてきました</li>
 </ul>
 </li>
-<li>原則に従ったコードを書きます。
+<li>原則に従ったコードを書きます
 <ul>
 <li>SOLID原則</li>
 <li>KISS原則</li>
@@ -932,17 +1326,33 @@
 <li>YAGNI原則</li>
 </ul>
 </li>
-<li>新たな技術を積極的に学びます。
+<li>新たな技術を積極的に学びます
 <ul>
-<li>未知の技術にも怯まず挑み、体得してきました。</li>
-<li>技術を学ぶための具体的な目標を立てて、モチベーションを高く維持してきました。</li>
+<li>未知の技術にも怯まず挑み、体得してきました</li>
+<li>技術を学ぶための具体的な目標を立てて、モチベーションを高く維持してきました</li>
 </ul>
 </li>
 </ul>
 <h2 id="やりたいこと"><a class="header" href="#やりたいこと">やりたいこと</a></h2>
 <ul>
-<li>Rust言語によるプログラミング</li>
-<li>新しい技術を取り入れた開発</li>
+<li>効率的で安全かつ保守性の高いプログラムを作りたい
+<ul>
+<li>できればRust言語によるプログラミング</li>
+<li>もちろん他の言語であっても努力をします</li>
+</ul>
+</li>
+<li>新しい技術を取り入れた開発をしたい
+<ul>
+<li>積極的に学びたい</li>
+</ul>
+</li>
+<li>チーム開発をしたい
+<ul>
+<li>同じ目標を持つ人と一緒に働きたい</li>
+<li>切磋琢磨できる仲間が欲しい</li>
+<li>ペアプログラミングなど複数人での作業をしてみたい</li>
+</ul>
+</li>
 </ul>
 
                     </main>
