@@ -1,4 +1,5 @@
 # フロントエンド開発(TypeScript)
+
 ## 外部依存の回避
 - ReactとCodeMirror(マークダウン対応のテキストエリア)のみを使って作成しました。
 - URLルーティング機構を自作しました。
@@ -15,7 +16,89 @@
 - 可変レイアウトを自作しました。
     - 各カラム、サイドバー、編集パネルのDrag ResizeをCSS Gridで実現しました。
         - 軽快なエリアのリサイズができます。
+- ReduxをReactとTypeScriptの機能で実現しました。
+    - Reduxを理解するため、react-reduxを使わずに実装しました。
+
 ## gRPC通信
 - gRPCを使って通信を行います。
 - 通信データには、Protocol Bufferスキーマで定義されたデータ型を使っています。
 - Connectで出力した型安全なコードを使ってサーバーと通信を行います。
+
+---
+
+# 実装内容例A
+
+## 課題
+- Single Page ApplicationでのURLルーティングの実現
+- TypeScriptでのReactを使ったフロントエンド
+
+## 機能の内容
+- 検索したら検索クエリをURLに変換して、そのURLへ移動
+- クリックしたフォルダやタグに該当するURLへ移動
+- URLをパースして検索クエリを構築してサーバーに送信
+
+## 工夫した点
+- 検索クエリの状態とURLを相互に変換可能
+- ReactのContext APIを使って表示内容の状態変化をレンダリング
+
+## 重視した点
+- Reduxによる状態変化の管理
+    - 状態を変更するパターンを限定
+    - 状態をImmutableな値として扱う
+- 過剰な依存を避ける
+    - Reduxはreact-reduxを使わずに実装
+        - ReactのuseReducer関数とuseContext関数を使って実装
+        - ActionをTypeScriptの型として定義することで、型システムを使って状態変化をパターン化
+    - ルーティングはreact-routerを使わずに実装
+        - ReactのContext APIを使ってレンダリング
+        - ブラウザのHistory APIを使って遷移
+
+## 使用した技術
+- TypeScript
+    - React
+        - Context API
+        - Reducer
+- ブラウザAPI
+    - Hisotry API
+
+---
+
+# 実装内容例B
+
+## 課題
+- 可変レイアウトの実現
+- TypeScriptでReactを使ったフロントエンド
+
+## 機能の内容
+- リサイズバー(Resize Bar)要素をドラッグして領域をリサイズする
+- リサイズした値をブラウザに保存する
+- 表のカラムの順番を入れ替えたり、カラム自体を消去できる
+
+## 工夫した点
+- リサイズバーはコンポーネント化して複数の領域で使用
+- CSS GridとCSSグローバル変数を組み合わせてレイアウトを定義
+    - CSSグローバル変数を書き換えることでリサイズ
+    - grid-template-columnsを書き換えることでカラムの表示と非表示とを切り替え
+- CSS Gridを入れ子構造にして各Gridのレイアウト上の役割を分割
+- LocalStorageで領域サイズを保存
+    - アクセス時に領域サイズを読み込んで画面上で再現
+
+## 重視した点
+- パフォーマンス重視
+    - JavaScript外部ライブラリを使わずに、ほぼCSSの機能を使って実装
+    - リサイズはrequestAnimationFrame関数を使って描画
+- Reactの再レンダリングの抑制
+    - リサイズの開始と終了時にのみContextの値を上書き
+    - React.useEffect関数でのレンダリング制御
+    - React.memo関数でのメモ化による再レンダリングのスキップ
+
+## 問題点
+- CSS GridとCSSグローバル変数の組み合わせは保守性が悪い
+    - ツールやエディタによるサポートがない
+
+## 使用した技術
+- CSS
+    - Grid
+    - グローバル変数
+- ブラウザAPI
+    - localStorage
