@@ -50,6 +50,7 @@
 
 ## 使用した技術
 - Rust
+- WebAssembly
 
 ---
 
@@ -83,3 +84,4 @@
 
 ## 使用した技術
 - Rust
+- WebAssembly
