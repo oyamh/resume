@@ -443,9 +443,34 @@
 <div style="break-before: page; page-break-before: always;"></div><h1 id="バックエンド開発go"><a class="header" href="#バックエンド開発go">バックエンド開発(Go)</a></h1>
 <h2 id="マイクロサービス"><a class="header" href="#マイクロサービス">マイクロサービス</a></h2>
 <ul>
-<li>ブラウザ上のフロントエンドと複数のAPIサーバーが、それぞれ必要に応じてデータ通信を行います。</li>
-<li>認証情報はトークンとしてユーザーのブラウザが保有し、HTTPヘッダーに付与して通信を行います。
+<li>フロントエンドと複数のAPIサーバーが、それぞれ必要に応じてデータ通信を行います。</li>
+<li>認証情報はトークン（JWT: JSON Web Token）としてユーザーのブラウザが保有し、HTTPヘッダーに付与して通信を行います。
 <ul>
+<li>トークンはアクセストークンとリフレッシュトークンの二種類
+<ul>
+<li>アクセストークン
+<ul>
+<li>LocalStorageで管理</li>
+<li>JS上でアクセスできる</li>
+<li>通信で使用する</li>
+<li>HTTP Authorization Bearerヘッダーで送信</li>
+</ul>
+</li>
+<li>リフレッシュトークン
+<ul>
+<li>Cookieで管理</li>
+<li>HttpOnly &amp; Secure
+<ul>
+<li>HTTPS通信でのみ使用</li>
+<li>JSからアクセスできない</li>
+</ul>
+</li>
+<li>アクセストークンの再取得でのみ使用する</li>
+<li>HTTP Cookieヘッダーで送信</li>
+</ul>
+</li>
+</ul>
+</li>
 <li>各リソースAPIサーバー内で認証情報を検証できます。
 <ul>
 <li>アクセスする度に認証APIサーバーへ照会せずに済みます。</li>
@@ -858,6 +883,7 @@
 <h2 id="使用した技術-3"><a class="header" href="#使用した技術-3">使用した技術</a></h2>
 <ul>
 <li>Rust</li>
+<li>WebAssembly</li>
 </ul>
 <hr />
 <h1 id="実装内容の例b"><a class="header" href="#実装内容の例b">実装内容の例B</a></h1>
@@ -907,6 +933,7 @@
 <h2 id="使用した技術-4"><a class="header" href="#使用した技術-4">使用した技術</a></h2>
 <ul>
 <li>Rust</li>
+<li>WebAssembly</li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="クラウドネットワーク構築"><a class="header" href="#クラウドネットワーク構築">クラウド＆ネットワーク構築</a></h1>
 <h2 id="google-cloud-engine"><a class="header" href="#google-cloud-engine">Google Cloud Engine</a></h2>
@@ -931,7 +958,7 @@
 <ul>
 <li>リンク先のサイズ変更済みFaviconを保存しています。</li>
 </ul>
-<h2 id="cloud-firestore"><a class="header" href="#cloud-firestore">Cloud Firestore</a></h2>
+<h2 id="google-cloud-firestore"><a class="header" href="#google-cloud-firestore">Google Cloud Firestore</a></h2>
 <ul>
 <li>Black Listに登録されたTokenのIDなど、ユーザー制限についての情報を保管しています。</li>
 </ul>
@@ -946,7 +973,7 @@
 <ul>
 <li>メンテナンスページの表示に使用しています。
 <ul>
-<li>IPアドレスを変数に登録することで、特定のアクセスのみを許可できます。</li>
+<li>IPアドレスをWhite List変数に登録することで、特定のアクセスのみを許可できます。</li>
 </ul>
 </li>
 </ul>
@@ -1245,6 +1272,7 @@ Rustを使ったプログラミングに夢中です。機械学習も勉強中�
 <ul>
 <li>リフレッシュ</li>
 <li>日光浴</li>
+<li>思考の整理</li>
 </ul>
 </li>
 <li>筋力トレーニング
