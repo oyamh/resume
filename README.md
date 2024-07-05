@@ -1,6 +1,6 @@
 # My Resume
 
-## Build
+## Dev
 ```bash
 $ mdbook serve --open
 ```
